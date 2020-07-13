@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--  demo01 -->
+    <!--
+        配置HelloWorld的bean实例  属性注入的方式setter
+        1.配置bean ： 通过无参构造方法实例化
+            id属性 唯一标识
+            class属性 全类名
+        2.配置property： 通过setXxx()赋值
+            name属性 给当前class指向的类中的哪一个属性赋值
+            value属性 赋值
+    -->
+    <bean id="h" class="org.test.demo01.HelloWorld.helloworld">
+        <property name="username1" value="李四"></property>
+    </bean>
+
+
+    <!-- demo02 -->
+    <bean id="p1" class="org.test.demo02.ref.Person">
+        <property name="username" value="王朝"></property>
+        <property name="age" value="56"></property>
+        <!-- 通过ref属性或者ref标签实现关联关系的赋值 -->
+        <property name="car" ref="c"></property>
+
+        <!--
+            修改当前car对象的价格，要求必须在操作之前先完成对car的赋值
+            级联属性进行操作  car.price  等价于Person的对象 setCar() ，Car的对象setPrice()
+        -->
+        <property name="car.price" value="500000.0"></property>
+    </bean>
+
+    <!--<bean id="p2" class="com.igeek.ch02.ref.Person">
+        <property name="username" value="马汉"></property>
+        <property name="age" value="66"></property>
+        &lt;!&ndash; 通过ref属性或者ref标签实现关联关系的赋值 &ndash;&gt;
+        <property name="car" ref="c"></property>
+    </bean>-->
+
+    <bean id="c" class="org.test.demo02.ref.Car">
+        <property name="label" value="奥迪"></property>
+        <property name="price" value="300000.0"></property>
+    </bean>
+
+
+    <!-- demo03  -->
+    <!-- 导入外部属性文件的配置 -->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+
+    <!-- 获取外部属性文件的配置 ${} -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${db.user}"></property>
+        <property name="password" value="${db.password}"></property>
+        <property name="jdbcUrl" value="${db.jdbcUrl}"></property>
+        <property name="driverClass" value="${db.driverclass}"></property>
+    </bean>
+
+
+    <!--  demo04 -->
+    <!-- 扫描指定包下的注解，让注解生效 -->
+    <context:component-scan base-package="org.test.demo04.annotation"></context:component-scan>
+
+</beans>
