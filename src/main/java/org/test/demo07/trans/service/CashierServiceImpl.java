@@ -16,7 +16,7 @@ public class CashierServiceImpl implements ICashierService {
     //客户的结账
     @Transactional
     @Override
-    public void cash(String username, List<Integer> bookIds) throws AccountException, BookStockException {
+    public void cash(String username, List<Integer> bookIds) /*throws AccountException, BookStockException*/ {
         for (Integer bookId : bookIds) {
             bookShopService.purchase(username, bookId);
         }

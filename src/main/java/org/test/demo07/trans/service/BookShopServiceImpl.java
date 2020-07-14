@@ -34,13 +34,13 @@ public class BookShopServiceImpl implements IBookShopService {
     timeout = 3,
     readOnly = false)
     @Override
-    public void purchase(String username, int bookId) throws BookStockException, AccountException {
+    public void purchase(String username, int bookId) /*throws BookStockException, AccountException*/ {
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(5000);//会导致进程休眠无法运行
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         int price = bookShopDao.selectPrice(bookId);
         //一旦添加了事务管理，当前两项操作要么都做，要么都不做
